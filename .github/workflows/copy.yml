@@ -1,0 +1,37 @@
+name: Copy files on change
+
+on:
+  push:
+    paths:
+      - 'en/**'  # Trigger action when any file in 'en' directory is changed
+  pull_request:
+    paths:
+      - 'en/**'  # Trigger action on PR for changes in 'en' directory
+
+jobs:
+  copy-files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Copy files from 'en' to 'ru' and 'zh'
+      run: |
+        # Ensure the 'ru' and 'zh' directories exist
+        mkdir -p ru
+        mkdir -p zh
+        
+        # Copy all files from 'en' directory to 'ru'
+        cp -r en/* ru/
+        
+        # Copy all files from 'en' directory to 'zh'
+        cp -r en/* zh/
+
+    - name: Commit changes
+      run: |
+        git config --local user.name "github-actions"
+        git config --local user.email "github-actions@github.com"
+        git add ru/* zh/*
+        git commit -m "Copy files from 'en' to 'ru' and 'zh' directories" || echo "No changes to commit"
+        git push
