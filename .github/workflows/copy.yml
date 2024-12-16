@@ -34,12 +34,13 @@ jobs:
         git config --local user.name "github-actions"
         git config --local user.email "github-actions@github.com"
         
-        # Pull the latest changes from the main branch
-        git pull origin main --rebase
+        # Pull the latest changes from the main branch with rebase
+        git fetch origin main
+        git rebase origin/main
         
         # Add all changes and commit them
         git add ru/* zh/*
         git commit -m "Copy files from 'en' to 'ru' and 'zh' directories" || echo "No changes to commit"
         
-        # Push changes back to the repository using the GITHUB_TOKEN
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+        # Force push changes back to the repository using the GITHUB_TOKEN
+        git push --force-with-lease https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
