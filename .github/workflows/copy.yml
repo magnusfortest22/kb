@@ -44,7 +44,7 @@ jobs:
         git diff --cached --quiet || git commit -m "Copy files from 'en' to 'ru' and 'zh' directories"
         
         # Pull the latest changes from the remote branch before pushing
-        git pull origin ${{ github.head_ref }} --rebase
+        git pull origin main --rebase
 
-        # Push the updated code to the branch
-        git push origin HEAD:${{ github.head_ref }}
+        # Push the updated code to the main branch
+        git push origin main
