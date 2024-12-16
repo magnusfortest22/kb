@@ -1,12 +1,12 @@
-name: Copy files from 'en' to 'ru' and 'zh' on changes
+name: Copy updated files to target language directories
 
 on:
   push:
     paths:
-      - 'en/**'  # Trigger the action on changes in the 'en' directory
+      - 'en/**'  # Trigger on changes in the 'en' directory
   pull_request:
     paths:
-      - 'en/**'  # Trigger the action for PRs on changes in 'en' directory
+      - 'en/**'  # Trigger for PRs on changes in 'en' directory
 
 jobs:
   copy-files:
@@ -21,30 +21,40 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Copy files from 'en' to 'ru' and 'zh'
+    - name: Copy only new or updated files to target languages
+      env:
+        TARGET_LANGUAGES: "ru zh" # Add more language codes (e.g., de, fr) separated by space
       run: |
-        # Ensure the 'ru' and 'zh' directories exist
-        mkdir -p ru
-        mkdir -p zh
-        
-        # Copy all files from 'en' directory to 'ru'
-        cp -r en/* ru/
-        
-        # Copy all files from 'en' directory to 'zh'
-        cp -r en/* zh/
+        # Split target languages into an array
+        for lang in $TARGET_LANGUAGES; do
+          mkdir -p $lang  # Ensure the directory exists
 
-    - name: Commit changes
+          # Find new or modified files in 'en' compared to the target directory
+          for file in $(find en -type f); do
+            relative_path=${file#en/}  # Get the relative file path
+            target_file="$lang/$relative_path"
+
+            # Copy the file only if it doesn't exist or has changed
+            if [ ! -f "$target_file" ] || ! cmp -s "$file" "$target_file"; then
+              mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories
+              cp "$file" "$target_file"            # Copy the file
+            fi
+          done
+        done
+
+    - name: Commit and push changes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Stage the copied files from 'en' to 'ru' and 'zh'
-        git add ru/* zh/*
+        # Stage only modified or newly copied files
+        git add -A ru zh
 
-        # Commit changes if any
-        git diff --cached --quiet || git commit -m "Copy files from 'en' to 'ru' and 'zh' directories"
-        
-        # Pull the latest changes from the remote branch before pushing
+        # Commit changes if there are any staged files
+        git diff --cached --quiet || git commit -m "Sync files from 'en' to target language directories"
+
+        # Pull the latest changes before pushing to avoid conflicts
         git pull origin main --rebase
 
         # Push the updated code to the main branch
         git push origin main
+
