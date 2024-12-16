@@ -13,3 +13,7 @@ GitBook's OpenAPI block is powered by [Scalar](https://scalar.com/), so you can 
 {% swagger src="https://petstore3.swagger.io/api/v3/openapi.json" path="/pet" method="post" %}
 [https://petstore3.swagger.io/api/v3/openapi.json](https://petstore3.swagger.io/api/v3/openapi.json)
 {% endswagger %}
+
+
+
+test only open api page&#x20;
