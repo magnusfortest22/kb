@@ -34,4 +34,4 @@ jobs:
         git config --local user.email "github-actions@github.com"
         git add ru/* zh/*
         git commit -m "Copy files from 'en' to 'ru' and 'zh' directories" || echo "No changes to commit"
-        git push
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
