@@ -1,12 +1,12 @@
-name: Copy files on change
+name: Copy files from 'en' to 'ru' and 'zh' on changes
 
 on:
   push:
     paths:
-      - 'en/**'  # Trigger action when any file in 'en' directory is changed
+      - 'en/**'  # Trigger the action on changes in the 'en' directory
   pull_request:
     paths:
-      - 'en/**'  # Trigger action on PR for changes in 'en' directory
+      - 'en/**'  # Trigger the action for PRs on changes in 'en' directory
 
 jobs:
   copy-files:
@@ -15,6 +15,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Copy files from 'en' to 'ru' and 'zh'
       run: |
@@ -29,20 +34,17 @@ jobs:
         cp -r en/* zh/
 
     - name: Commit changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Set up Git
-        git config --local user.name "github-actions"
-        git config --local user.email "github-actions@github.com"
-        
-        # Fetch latest changes from remote main branch
-        git fetch origin main
-        
-        # Rebase changes on top of the remote main branch
-        git rebase origin/main
-        
-        # Add all changes and commit them
+        # Stage the copied files from 'en' to 'ru' and 'zh'
         git add ru/* zh/*
-        git commit -m "Copy files from 'en' to 'ru' and 'zh' directories" || echo "No changes to commit"
+
+        # Commit changes if any
+        git diff --cached --quiet || git commit -m "Copy files from 'en' to 'ru' and 'zh' directories"
         
-        # Push the changes back to the repository using the GITHUB_TOKEN
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+        # Pull the latest changes from the remote branch before pushing
+        git pull origin ${{ github.head_ref }} --rebase
+
+        # Push the updated code to the branch
+        git push origin HEAD:${{ github.head_ref }}
