@@ -1,5 +1,5 @@
 ---
-значок: plug-circle-plus
+icon: plug-circle-plus
 ---
 
 # Интеграции

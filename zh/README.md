@@ -1,30 +1,30 @@
 ---
-icon: 挥手
-封面：https://gitbookio.github.io/onboarding-template-images/header.png
-coverY：0
-layout：
-封面：
-visible：true
-size：full
-title：
-visible：true
-description：
-visible：false
-tableOfContents：
-visible：true
-outline：
-visible：true
-pagination：
-visible：true
+icon: hand-wave
+cover: https://gitbookio.github.io/onboarding-template-images/header.png
+coverY: 0
+layout:
+  cover:
+    visible: true
+    size: full
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
 # 欢迎
 
-欢迎使用 GitBook Starter 模板！在这里，您将获得 GitBook 提供的所有惊人功能的概述，这些功能可帮助您构建漂亮的交互式文档。
+欢迎使用 GitBook 入门模板！在这里，您将概览 GitBook 提供的所有出色功能，这些功能可帮助您构建美观、交互式的文档。
 
-您将看到 GitBook 的一些最佳部分的实际应用 — 并找到有关如何将其转变为 GitBook 的帮助&#x20;
+您将看到 GitBook 的一些最佳部分的实际应用 — 并找到有关如何实现这一点的帮助&#x20;
 
-### 直接跳转到更改 s
+### 直接跳转到
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 

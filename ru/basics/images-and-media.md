@@ -1,5 +1,5 @@
 ---
-значок: image-landscape
+icon: image-landscape
 ---
 
 # Изображения и медиа

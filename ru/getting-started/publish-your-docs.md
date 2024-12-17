@@ -1,5 +1,5 @@
 ---
-значок: globe-pointer
+icon: globe-pointer
 ---
 
 # Опубликуйте свои документы

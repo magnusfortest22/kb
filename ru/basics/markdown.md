@@ -1,5 +1,5 @@
 ---
-значок: markdown
+icon: markdown
 ---
 
 # Markdown

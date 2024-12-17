@@ -1,30 +1,30 @@
 ---
-значок: hand-wave
-обложка: https://gitbookio.github.io/onboarding-template-images/header.png
-обложкаY: 0
-макет:
-обложка:
-видимый: true
-размер: полный
-заголовок:
-видимый: true
-описание:
-видимый: false
-tableOfContents:
-видимый: true
-контур:
-видимый: true
-разбиение на страницы:
-видимый: true
+icon: hand-wave
+cover: https://gitbookio.github.io/onboarding-template-images/header.png
+coverY: 0
+layout:
+  cover:
+    visible: true
+    size: full
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
 # Добро пожаловать
 
-Добро пожаловать в GitBook Starter Template! Здесь вы получите обзор всех удивительных функций, которые GitBook предлагает, чтобы помочь вам создать прекрасную интерактивную документацию.
+Добро пожаловать в GitBook Starter Template! Здесь вы получите обзор всех замечательных функций, которые предлагает GitBook, чтобы помочь вам создать прекрасную интерактивную документацию.
 
 Вы увидите некоторые из лучших частей GitBook в действии — и найдете помощь о том, как вы можете превратить это&#x20;
 
-### Переходим сразу к изменениям
+### Переходите прямо сейчас
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 

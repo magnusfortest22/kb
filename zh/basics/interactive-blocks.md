@@ -1,5 +1,5 @@
 ---
-icon: 指针
+icon: hand-pointer
 ---
 
 # 交互式块

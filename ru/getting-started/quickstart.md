@@ -1,5 +1,5 @@
 ---
-значок: bullseye-arrow
+icon: bullseye-arrow
 ---
 
 # Быстрый старт

@@ -1,5 +1,5 @@
 ---
-значок: сетевой
+icon: network-wired
 ---
 
 # OpenAPI
