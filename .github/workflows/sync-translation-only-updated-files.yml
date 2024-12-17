@@ -1,0 +1,72 @@
+name: Sync and Translate Updated Files
+
+on:
+  push:
+    paths:
+      - 'en/**'  # Trigger on changes in the 'en' directory
+  pull_request:
+    paths:
+      - 'en/**'  # Trigger for PRs on changes in 'en' directory
+
+jobs:
+  translate-and-copy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify your Node.js version
+
+    - name: Install dependencies
+      run: |
+        # Install dependencies for your ESM script
+        npm install node-fetch
+
+    - name: Get list of modified files
+      id: modified-files
+      run: |
+        # Get list of modified files in the 'en' directory
+        modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'en/**')
+        echo "modified_files=$modified_files" >> $GITHUB_ENV  # Set modified files as an environment variable
+
+    - name: Copy and Translate Modified Files
+      if: env.modified_files != ''  # Only proceed if there are modified files
+      env:
+        TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
+      run: |
+        # Iterate over each modified file
+        for file in $modified_files; do
+          # Ensure that the file is within the 'en' directory and is a file
+          if [[ -f "en/$file" ]]; then
+            # Get the relative path
+            relative_path=${file#en/}
+            
+            # For each language (ru, zh), translate and copy the file
+            for lang in $TARGET_LANGUAGES; do
+              target_file="$lang/$relative_path"
+              mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
+
+              # Run the translation script for the modified file
+              echo "Translating $file to $lang..."
+              node translate.mjs "en/$file" "$target_file" "$lang"
+            done
+          fi
+        done
+
+    - name: Configure Git user
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+
+    - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git add -A ru zh  # Add all changes (new files in 'ru' and 'zh' directories)
+        git diff --cached --quiet || git commit -m "Sync modified files from 'en' to target language directories"
+        git pull origin main --rebase
+        git push origin main

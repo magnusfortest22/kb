@@ -1,12 +1,12 @@
 name: Sync and Translate Files
 
-on:
-  push:
-    paths:
-      - 'en/**'  # Trigger on changes in the 'en' directory
-  pull_request:
-    paths:
-      - 'en/**'  # Trigger for PRs on changes in 'en' directory
+# on:
+#   push:
+#     paths:
+#       - 'en/**'  # Trigger on changes in the 'en' directory
+#   pull_request:
+#     paths:
+#       - 'en/**'  # Trigger for PRs on changes in 'en' directory
 
 jobs:
   translate-and-copy:
