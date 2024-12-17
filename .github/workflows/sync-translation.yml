@@ -31,7 +31,7 @@ jobs:
         TARGET_LANGUAGES: "ru zh" # Add more language codes as needed
       run: |
         for lang in $TARGET_LANGUAGES; do
-          python translate.py --target $lang --api_key $API_KEY
+          python translate.py --target-language $lang --api_key $API_KEY
         done
 
     - name: Copy only new or updated files to target languages
