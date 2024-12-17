@@ -15,3 +15,7 @@
 * [Interactive blocks](basics/interactive-blocks.md)
 * [OpenAPI](basics/openapi.md)
 * [Integrations](basics/integrations.md)
+
+***
+
+* [Custom Page by Manpreet](custom-page-by-manpreet.md)
