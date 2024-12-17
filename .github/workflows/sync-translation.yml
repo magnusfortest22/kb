@@ -30,23 +30,19 @@ jobs:
       env:
         TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
       run: |
-        # Iterate over each target language
+        # Iterate over each target language (ru, zh)
         for lang in $TARGET_LANGUAGES; do
-          mkdir -p $lang  # Ensure the directory exists
+          mkdir -p $lang  # Ensure the target language directory exists
 
           # Find all files in the 'en' directory
           for file in $(find en -type f); do
-            relative_path=${file#en/}  # Get the relative file path
+            relative_path=${file#en/}  # Get the relative file path from 'en'
             target_file="$lang/$relative_path"
-            mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories
+            mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
 
             # Run the ESM translation script for each file
+            echo "Translating $file to $lang..."
             node translate.mjs "$file" "$target_file" "$lang"
-
-            # Copy the translated file into the target directory
-            if [ -f "$target_file" ]; then
-              cp -f "$target_file" "$lang/$relative_path"
-            fi
           done
         done
 
@@ -54,7 +50,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git add -A ru zh
+        git add -A ru zh  # Add all changes (new files in 'ru' and 'zh' directories)
         git diff --cached --quiet || git commit -m "Sync files from 'en' to target language directories"
         git pull origin main --rebase
         git push origin main
