@@ -1,4 +1,4 @@
-name: Sync and Translate Updated Files
+name: Sync and Translate Files
 
 on:
   push:
@@ -13,43 +13,48 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository with full history
+    - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Fetch the full history to ensure all commits are available
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: '16'  # Specify your Node.js version
 
     - name: Install dependencies
       run: |
+        # Install dependencies for your ESM script
         npm install node-fetch
 
-    - name: Get list of modified or new files
-      id: modified-files
+    - name: Get changed files
+      id: changed-files
       run: |
-        # Use GitHub Actions' context for the commit hashes (before and after)
-        modified_files=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} -- 'en/**')
-        echo "modified_files=$modified_files" >> $GITHUB_ENV  # Set modified files as an environment variable
+        # Get the list of changed files in the 'en' directory
+        changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^en/')
+        echo "Changed files: $changed_files"
+        echo "::set-output name=changed_files::$changed_files"
 
-    - name: Translate and Copy Modified or New Files
-      if: env.modified_files != ''  # Only proceed if there are modified or new files
+    - name: Copy and Translate Files
       env:
-        TARGET_LANGUAGES: "ru zh"
+        TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
       run: |
-        # Loop through each modified or new file
-        for file in $modified_files; do
-          if [[ -f "en/$file" ]]; then
-            relative_path=${file#en/}  # Get relative path after "en/"
-            for lang in $TARGET_LANGUAGES; do
-              target_file="$lang/$relative_path"  # Set target path in the target language directory
-              mkdir -p "$(dirname "$target_file")"  # Create the necessary directories for the target file
-              echo "Translating $file to $lang..."
-              node translate.mjs "en/$file" "$target_file" "$lang"  # Run translation script
-            done
-          fi
+        # Iterate over each target language (ru, zh)
+        for lang in $TARGET_LANGUAGES; do
+          mkdir -p $lang  # Ensure the target language directory exists
+
+          # Get the list of changed files
+          changed_files="${{ steps.changed-files.outputs.changed_files }}"
+
+          # Iterate through each changed file
+          for file in $changed_files; do
+            relative_path=${file#en/}  # Get the relative file path from 'en'
+            target_file="$lang/$relative_path"
+            mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
+
+            # Run the ESM translation script for each file
+            echo "Translating $file to $lang..."
+            node translate.mjs "$file" "$target_file" "$lang"
+          done
         done
 
     - name: Configure Git user
@@ -61,7 +66,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git add -A  # Add all modified files, including new ones
-        git diff --cached --quiet || git commit -m "Sync modified and new files from 'en' to target language directories"
+        git add -A ru zh  # Add all changes (new files in 'ru' and 'zh' directories)
+        git diff --cached --quiet || git commit -m "Sync files from 'en' to target language directories"
         git pull origin main --rebase
         git push origin main
