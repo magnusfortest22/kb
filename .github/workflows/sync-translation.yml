@@ -41,7 +41,7 @@ jobs:
             mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories
 
             # Translate the content of the file using the ESM script
-            node -r esm -e "
+            node -e "
               import { readFileSync, writeFileSync } from 'fs';
               import fetch from 'node-fetch';
 
