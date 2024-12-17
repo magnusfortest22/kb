@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout repository with full history
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch the full history to ensure all commits are available
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
