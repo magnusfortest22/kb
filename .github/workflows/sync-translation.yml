@@ -45,7 +45,7 @@ jobs:
 
             # Copy the translated file into the target directory
             if [ -f "$target_file" ]; then
-              cp "$target_file" "$lang/$relative_path"
+              cp -f "$target_file" "$lang/$relative_path"
             fi
           done
         done
