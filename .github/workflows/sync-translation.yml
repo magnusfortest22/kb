@@ -19,15 +19,16 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Ensure compatibility with your translation script
+        node-version: '16'  # Specify your Node.js version
 
     - name: Install dependencies
       run: |
+        # Install dependencies for your ESM script
         npm install node-fetch
 
     - name: Copy and Translate Files
       env:
-        TARGET_LANGUAGES: "ru zh"  # List the target languages
+        TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
       run: |
         # Iterate over each target language
         for lang in $TARGET_LANGUAGES; do
@@ -39,13 +40,13 @@ jobs:
             target_file="$lang/$relative_path"
             mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories
 
-            # Translate the content of the file
-            node -e "
-              const fs = require('fs');
-              const fetch = require('node-fetch');
+            # Translate the content of the file using the ESM script
+            node -r esm -e "
+              import { readFileSync, writeFileSync } from 'fs';
+              import fetch from 'node-fetch';
 
               async function translateText(text, targetLanguage = '$lang', sourceLanguage = 'en') {
-                const apiKey = 'AIzaSyCP5-GJVMKaNQePcHyCVZO9jmqeTrV8Px0';  // Replace with your own API key
+                const apiKey = 'AIzaSyCP5-GJVMKaNQePcHyCVZO9jmqeTrV8Px0';  // Replace with your API key
                 const url = 'https://translation.googleapis.com/language/translate/v2?key=' + apiKey;
                 const body = JSON.stringify({ q: text, target: targetLanguage, source: sourceLanguage, format: 'text' });
 
@@ -69,10 +70,10 @@ jobs:
 
               async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
                 try {
-                  const content = fs.readFileSync(inputFile, 'utf8');
+                  const content = readFileSync(inputFile, 'utf8');
                   const translatedContent = await translateText(content, targetLanguage);
                   if (translatedContent) {
-                    fs.writeFileSync(outputFile, translatedContent, 'utf8');
+                    writeFileSync(outputFile, translatedContent, 'utf8');
                     console.log('Translation complete. The translated file is saved as:', outputFile);
                   }
                 } catch (error) {
