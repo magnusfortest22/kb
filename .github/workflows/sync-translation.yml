@@ -25,18 +25,20 @@ jobs:
       run: |
         pip install --upgrade google-cloud-translate
 
-    - name: Translate Markdown files
+    - name: Translate Markdown files for all target languages
       env:
-        API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}
+        GOOGLE_CLOUD_API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}
         TARGET_LANGUAGES: "ru zh" # Add more language codes as needed
       run: |
         for lang in $TARGET_LANGUAGES; do
-          python translate.py --api_key "$API_KEY" --target-language "$lang"
+          echo "Translating files to $lang"
+          export TARGET_LANGUAGE=$lang
+          python translate.py
         done
 
     - name: Copy only new or updated files to target languages
       env:
-        TARGET_LANGUAGES: "ru zh" # Add more language codes (e.g., de, fr) separated by space
+        TARGET_LANGUAGES: "ru zh" # Ensure this matches the languages above
       run: |
         for lang in $TARGET_LANGUAGES; do
           mkdir -p $lang  # Ensure the directory exists
