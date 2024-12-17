@@ -6,6 +6,7 @@
 
 * [Быстрый старт](getting-started/quickstart.md)
 * [Опубликуйте свои документы](getting-started/publish-your-docs.md)
+* [Пользовательская страница от Manpreet](getting-started/custom-page-by-manpreet.md)
 
 ## Основы
 
