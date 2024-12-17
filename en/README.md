@@ -24,7 +24,7 @@ Welcome to the GitBook Starter Template! Here you'll get an overview of all the 
 
 You'll see some of the best parts of GitBook in action — and find help on how you can turn this template into your own.
 
-### Jump right in there with me here and
+### Jump right in&#x20;
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
