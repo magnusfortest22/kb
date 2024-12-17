@@ -65,20 +65,6 @@ jobs:
           done
         done
 
-    - name: Sync directory structure
-      run: |
-        # Directories to sync
-        LANG_DIRS=("ru" "zh")
-
-        # Sync structure for each language directory
-        for LANG in "${LANG_DIRS[@]}"; do
-          # Ensure all files and directories in 'en' exist in the target directory
-          rsync -av --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
-
-          # Remove files/directories in the target directory that no longer exist in 'en'
-          rsync -av --delete --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
-        done
-
     - name: Configure Git user
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
