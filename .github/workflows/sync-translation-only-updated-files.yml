@@ -32,10 +32,11 @@ jobs:
         # Get the list of changed files in the 'en' directory
         if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
           # For push events, compare with the previous commit
-          changed_files=$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} | grep '^en/')
+          git fetch --depth=2  # Ensure we have the previous commit
+          changed_files=$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- 'en/*')
         elif [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
           # For pull request events, compare with the base commit of the PR
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^en/')
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'en/*')
         fi
 
         echo "Changed files: $changed_files"
