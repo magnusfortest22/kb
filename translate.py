@@ -1,29 +1,13 @@
+import argparse
 import os
 from google.cloud import translate_v2 as translate
 
 def translate_text(target: str, text: str, api_key: str):
-    """Translates text into the target language.
-
-    Target must be an ISO 639-1 language code.
-    See https://g.co/cloud/translate/v2/translate-reference#supported_languages
-
-    Args:
-        target (str): ISO 639-1 language code for translation.
-        text (str): Text to be translated.
-        api_key (str): Your Google Cloud API key.
-
-    Returns:
-        str: The translated text.
-    """
+    """Translates text into the target language."""
     translate_client = translate.Client(credentials=translate.Credentials(api_key))
-
     if isinstance(text, bytes):
         text = text.decode("utf-8")
-
     result = translate_client.translate(text, target_language=target)
-    print(f"Translating text: {text[:100]}... to language: {target}")
-    print(f"Translation result: {result['translatedText']}")
-
     return result['translatedText']
 
 def translate_md_files_in_directory(target_language: str, api_key: str):
@@ -57,6 +41,9 @@ def translate_md_files_in_directory(target_language: str, api_key: str):
                 print(f"Translated {source_file} -> {target_file}")
 
 if __name__ == "__main__":
-    api_key = input("Enter your Google Cloud API key: ")
-    target_language = input("Enter the target language code (e.g., 'es' for Spanish): ").strip()
-    translate_md_files_in_directory(target_language, api_key)
+    parser = argparse.ArgumentParser(description="Translate Markdown files to a target language.")
+    parser.add_argument("--api-key", required=True, help="Google Cloud API key.")
+    parser.add_argument("--target-language", required=True, help="Target language code (e.g., 'es').")
+
+    args = parser.parse_args()
+    translate_md_files_in_directory(args.target_language, args.api_key)
