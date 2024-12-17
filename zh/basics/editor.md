@@ -2,37 +2,37 @@
 icon: pen-to-square
 ---
 
-# Editor
+# 编辑器
 
-GitBook has a powerful block-based editor that allows you to seamlessly create, update, and enhance your content.
+GitBook 拥有强大的基于块的编辑器，可让您无缝创建、更新和增强内容。
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/editor-hero.png" alt=""><figcaption></figcaption></figure>
 
-### Writing content
+### 编写内容
 
-GitBook offers a range of block types for you to add to your content inline — from simple text and tables, to code blocks and more. These elements will make your pages more useful to readers, and offer extra information and context.
+GitBook 提供一系列块类型供您内联添加到内容中 - 从简单的文本和表格到代码块等等。这些元素将使您的页面对读者更有用，并提供额外的信息和上下文。
 
-Either start typing below, or press `/` to see a list of the blocks you can insert into your page.
+在下面开始输入，或按 `/` 查看可以插入到页面中的块列表。
 
-### Add a new block
+### 添加新块
 
 {% stepper %}
 {% step %}
-### Open the insert block menu
+### 打开插入块菜单
 
-Press `/` on your keyboard to open the insert block menu.
+按键盘上的 `/` 打开插入块菜单。
 {% endstep %}
 
 {% step %}
-### Search for the block you need&#x20;
+### 搜索您需要的块&#x20;
 
-Try searching for “Stepper”, for exampe, to insert the stepper block.
+例如，尝试搜索“Stepper”以插入 stepper 块。
 {% endstep %}
 
 {% step %}
-### Insert and edit your block
+### 插入并编辑您的块
 
-Click or press Enter to insert your block. From here, you’ll be able to edit it as needed.
+单击或按 Enter 插入您的块。从这里，您可以根据需要对其进行编辑。
 {% endstep %}
 {% endstepper %}
 

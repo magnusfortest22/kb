@@ -1,31 +1,31 @@
 ---
-icon: hand-wave
-cover: https://gitbookio.github.io/onboarding-template-images/header.png
-coverY: 0
-layout:
-  cover:
-    visible: true
-    size: full
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
+значок: hand-wave
+обложка: https://gitbookio.github.io/onboarding-template-images/header.png
+обложкаY: 0
+макет:
+обложка:
+видимый: true
+размер: полный
+заголовок:
+видимый: true
+описание:
+видимый: false
+tableOfContents:
+видимый: true
+контур:
+видимый: true
+разбиение на страницы:
+видимый: true
 ---
 
-# Welcome
+# Добро пожаловать
 
-Welcome to the GitBook Starter Template! Here you'll get an overview of all the amazing features GitBook offers to help you build beautiful, interactive documentation.
+Добро пожаловать в GitBook Starter Template! Здесь вы получите обзор всех удивительных функций, которые GitBook предлагает, чтобы помочь вам создать прекрасную интерактивную документацию.
 
-You'll see some of the best parts of GitBook in action — and find help on how you can turn this template into your own.
+Вы увидите некоторые из лучших частей GitBook в действии — и найдете помощь о том, как вы можете превратить это&#x20;
 
-### Jump right in
+### Переходим сразу к изменениям
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Getting Started</strong></td><td>Create your first site</td><td></td><td></td><td><a href="getting-started/quickstart.md">quickstart.md</a></td></tr><tr><td><strong>Basics</strong></td><td>Learn the basics of GitBook</td><td></td><td></td><td><a href="broken-reference">Broken link</a></td></tr><tr><td><strong>Publish your docs</strong></td><td>Share your docs online</td><td></td><td></td><td><a href="getting-started/publish-your-docs.md">publish-your-docs.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Начало работы</strong></td><td>Создайте свой первый сайт</td><td></td><td></td><td><a href="getting-started/quickstart.md">quickstart.md</a></td></tr><tr><td><strong>Основы</strong></td><td>Изучите основы GitBook</td><td></td><td></td><td><a href="broken-reference">Нерабочая ссылка</a></td></tr><tr><td><strong>Опубликуйте свои документы</strong></td><td>Поделитесь своими документами в Интернете</td><td></td><td></td><td><a href="getting-started/publish-your-docs.md">publish-your-docs.md</a></td></tr></tbody></table>

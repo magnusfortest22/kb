@@ -1,31 +1,31 @@
 ---
-icon: hand-wave
-cover: https://gitbookio.github.io/onboarding-template-images/header.png
-coverY: 0
-layout:
-  cover:
-    visible: true
-    size: full
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
+icon: 挥手
+封面：https://gitbookio.github.io/onboarding-template-images/header.png
+coverY：0
+layout：
+封面：
+visible：true
+size：full
+title：
+visible：true
+description：
+visible：false
+tableOfContents：
+visible：true
+outline：
+visible：true
+pagination：
+visible：true
 ---
 
-# Welcome
+# 欢迎
 
-Welcome to the GitBook Starter Template! Here you'll get an overview of all the amazing features GitBook offers to help you build beautiful, interactive documentation.
+欢迎使用 GitBook Starter 模板！在这里，您将获得 GitBook 提供的所有惊人功能的概述，这些功能可帮助您构建漂亮的交互式文档。
 
-You'll see some of the best parts of GitBook in action — and find help on how you can turn this template into your own.
+您将看到 GitBook 的一些最佳部分的实际应用 — 并找到有关如何将其转变为 GitBook 的帮助&#x20;
 
-### Jump right in
+### 直接跳转到更改 s
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Getting Started</strong></td><td>Create your first site</td><td></td><td></td><td><a href="getting-started/quickstart.md">quickstart.md</a></td></tr><tr><td><strong>Basics</strong></td><td>Learn the basics of GitBook</td><td></td><td></td><td><a href="broken-reference">Broken link</a></td></tr><tr><td><strong>Publish your docs</strong></td><td>Share your docs online</td><td></td><td></td><td><a href="getting-started/publish-your-docs.md">publish-your-docs.md</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>入门</strong></td><td>创建您的第一个网站</td><td></td><td></td><td><a href="getting-started/quickstart.md">quickstart.md</a></td></tr><tr><td><strong>基础知识</strong></td><td>了解基础知识GitBook</td><td></td><td></td><td><a href="broken-reference">链接无效</a></td></tr><tr><td><strong>发布您的文档</strong></td><td>在线共享您的文档</td><td></td><td></td><td><a href="getting-started/publish-your-docs.md">publish-your-docs.md</a></td></tr></tbody></table>

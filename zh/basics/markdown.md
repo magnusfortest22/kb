@@ -4,25 +4,25 @@ icon: markdown
 
 # Markdown
 
-GitBook supports many different types of content, and is backed by Markdown — meaning you can copy and paste any existing Markdown files directly into the editor!
+GitBook 支持多种不同类型的内容，并由 Markdown 支持 — 这意味着您可以将任何现有的 Markdown 文件直接复制并粘贴到编辑器中！
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/markdown-hero.png" alt=""><figcaption></figcaption></figure>
 
-Feel free to test it out and copy the Markdown below by hovering over the code block in the upper right, and pasting into a new line underneath.
+请随意测试并复制下面的 Markdown，方法是将鼠标悬停在右上角的代码块上，然后粘贴到下面的新行中。
 
 ```markdown
-# Heading
+# 标题
 
-This is some paragraph text, with a [link](https://docs.gitbook.com) to our docs. 
+这是一些段落文本，带有指向我们文档的 [链接](https://docs.gitbook.com)。
 
-## Heading 2
-- Point 1
-- Point 2
-- Point 3
+## 标题 2
+- 要点 1
+- 要点 2
+- 要点 3
 ```
 
 {% hint style="info" %}
-If you have multiple files, GitBook makes it easy to import full repositories too — allowing you to keep your GitBook content in sync.
+如果您有多个文件，GitBook 也可以轻松导入完整的存储库 - 让您保持 GitBook 内容同步。
 {% endhint %}
 
-Simple Change HERE is
+此处的简单更改是

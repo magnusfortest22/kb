@@ -4,16 +4,14 @@ icon: network-wired
 
 # OpenAPI
 
-You can sync GitBook pages with an OpenAPI or Swagger file or a URL to include auto-generated API methods in your documentation.
+您可以将 GitBook 页面与 OpenAPI 或 Swagger 文件或 URL 同步，以将自动生成的 API 方法包含在您的文档中。
 
-### OpenAPI block
+### OpenAPI 块
 
-GitBook's OpenAPI block is powered by [Scalar](https://scalar.com/), so you can test your APIs directly from your docs.
+GitBook 的 OpenAPI 块由 [Scalar](https://scalar.com/) 提供支持，因此您可以直接从文档中测试您的 API。
 
 {% swagger src="https://petstore3.swagger.io/api/v3/openapi.json" path="/pet" method="post" %}
 [https://petstore3.swagger.io/api/v3/openapi.json](https://petstore3.swagger.io/api/v3/openapi.json)
 {% endswagger %}
 
-
-
-test only open api page&#x20;
+仅测试开放 API 页面&#x20;

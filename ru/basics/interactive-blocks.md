@@ -1,50 +1,50 @@
 ---
-icon: hand-pointer
+значок: указатель руки
 ---
 
-# Interactive blocks
+# Интерактивные блоки
 
-In addition to the default Markdown you can write, GitBook has a number of out-of-the-box interactive blocks you can use. You can find interactive blocks by pressing `/` from within the editor.
+В дополнение к стандартному Markdown, который вы можете написать, GitBook имеет ряд готовых интерактивных блоков, которые вы можете использовать. Вы можете найти интерактивные блоки, нажав `/` в редакторе.
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/interactive-hero.png" alt=""><figcaption></figcaption></figure>
 
-### Tabs
+### Вкладки
 
 {% tabs %}
-{% tab title="First tab" %}
-Each tab is like a mini page — it can contain multiple other blocks, of any type. So you can add code blocks, images, integration blocks and more to individual tabs in the same tab block.
+{% tab title="Первая вкладка" %}
+Каждая вкладка похожа на мини-страницу — она может содержать несколько других блоков любого типа. Таким образом, вы можете добавлять блоки кода, изображения, блоки интеграции и многое другое в отдельные вкладки в том же блоке вкладок.
 {% endtab %}
 
-{% tab title="Second tab" %}
-Add images, embedded content, code blocks, and more.
+{% tab title="Вторая вкладка" %}
+Добавляйте изображения, встроенный контент, блоки кода и многое другое.
 
 ```javascript
 const handleFetchEvent = async (request, context) => {
-    return new Response({message: "Hello World"});
+return new Response({message: "Hello World"});
 };
 ```
 {% endtab %}
 {% endtabs %}
 
-### Expandable sections
+### Расширяемые разделы
 
 <details>
 
-<summary>Click me to expand</summary>
+<summary>Нажмите, чтобы развернуть</summary>
 
-Expandable blocks are helpful in condensing what could otherwise be a lengthy paragraph. They are also great in step-by-step guides and FAQs.
+Расширяемые блоки помогают сократить то, что в противном случае могло бы стать длинным абзацем. Они также отлично подходят для пошаговых руководств и часто задаваемых вопросов.
 
 </details>
 
-### Drawings
+### Рисунки
 
 <img alt="" class="gitbook-drawing">
 
-### Embedded content
+### Встроенный контент
 
 {% embed url="https://www.youtube.com/watch?v=YILlrDYzAm4" %}
 
 {% hint style="info" %}
-GitBook supports thousands of embedded websites out-of-the-box, simply by pasting their links. Feel free to check out which ones[ are supported natively](https://iframely.com).
+GitBook поддерживает тысячи встроенных веб-сайтов из коробки, просто вставляя их ссылки. Не стесняйтесь проверить, какие из них [поддерживаются изначально](https://iframely.com).
 {% endhint %}
 

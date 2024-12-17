@@ -1,28 +1,28 @@
 ---
-icon: markdown
+значок: markdown
 ---
 
 # Markdown
 
-GitBook supports many different types of content, and is backed by Markdown — meaning you can copy and paste any existing Markdown files directly into the editor!
+GitBook поддерживает множество различных типов контента и поддерживается Markdown — это означает, что вы можете копировать и вставлять любые существующие файлы Markdown прямо в редактор!
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/markdown-hero.png" alt=""><figcaption></figcaption></figure>
 
-Feel free to test it out and copy the Markdown below by hovering over the code block in the upper right, and pasting into a new line underneath.
+Не стесняйтесь протестировать его и скопировать Markdown ниже, наведя курсор на блок кода в правом верхнем углу и вставив в новую строку под ним.
 
 ```markdown
-# Heading
+# Заголовок
 
-This is some paragraph text, with a [link](https://docs.gitbook.com) to our docs. 
+Это текст абзаца со [ссылкой](https://docs.gitbook.com) на наши документы. 
 
-## Heading 2
-- Point 1
-- Point 2
-- Point 3
+## Заголовок 2
+- Пункт 1
+- Пункт 2
+- Пункт 3
 ```
 
 {% hint style="info" %}
-If you have multiple files, GitBook makes it easy to import full repositories too — allowing you to keep your GitBook content in sync.
+Если у вас несколько файлов, GitBook также позволяет легко импортировать полные репозитории — позволяя вам синхронизировать содержимое GitBook.
 {% endhint %}
 
-Simple Change HERE is
+Простое изменение ЗДЕСЬ — это

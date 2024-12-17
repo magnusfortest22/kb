@@ -1,13 +1,13 @@
 ---
-icon: image-landscape
+значок: image-landscape
 ---
 
-# Images & media
+# Изображения и медиа
 
-GitBook allows you to add images and media easily to your docs. Simply drag a file into the editor, or use the file manager in the upper right corner to upload multiple images at once.
+GitBook позволяет вам легко добавлять изображения и медиа в ваши документы. Просто перетащите файл в редактор или используйте файловый менеджер в правом верхнем углу, чтобы загрузить несколько изображений одновременно.
 
-<figure><img src="https://gitbookio.github.io/onboarding-template-images/images-hero.png" alt=""><figcaption><p>Add alt text and captions to your images</p></figcaption></figure>
+<figure><img src="https://gitbookio.github.io/onboarding-template-images/images-hero.png" alt=""><figcaption><p>Добавьте альтернативный текст и подписи к вашим изображениям</p></figcaption></figure>
 
 {% hint style="info" %}
-You can also add images simply by copying and pasting them directly into the editor — and GitBook will automatically add it to your file manager.
+Вы также можете добавлять изображения, просто копируя и вставляя их непосредственно в редактор — и GitBook автоматически добавит их в ваш файловый менеджер.
 {% endhint %}

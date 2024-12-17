@@ -1,17 +1,17 @@
-# Table of contents
+# 目录
 
-* [Welcome](README.md)
+* [欢迎](README.md)
 
-## Getting Started
+## 入门
 
-* [Quickstart](getting-started/quickstart.md)
-* [Publish your docs](getting-started/publish-your-docs.md)
+* [快速入门](getting-started/quickstart.md)
+* [发布您的文档](getting-started/publish-your-docs.md)
 
-## Basics
+## 基础知识
 
-* [Editor](basics/editor.md)
+* [编辑器](basics/editor.md)
 * [Markdown](basics/markdown.md)
-* [Images & media](basics/images-and-media.md)
-* [Interactive blocks](basics/interactive-blocks.md)
+* [图像和媒体](basics/images-and-media.md)
+* [交互式块](basics/interactive-blocks.md)
 * [OpenAPI](basics/openapi.md)
-* [Integrations](basics/integrations.md)
+* [集成](basics/integrations.md)

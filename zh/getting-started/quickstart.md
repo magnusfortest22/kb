@@ -2,22 +2,22 @@
 icon: bullseye-arrow
 ---
 
-# Quickstart
+# 快速入门
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/quickstart-hero.png" alt=""><figcaption></figcaption></figure>
 
-Beautiful documentation starts with the content you create — and GitBook makes it easy to get started with any pre-existing content.
+精美的文档从您创建的内容开始 — GitBook 让您可以轻松从任何现有内容开始。
 
 {% hint style="info" %}
-Want to learn about writing content from scratch? Head to the [Basics](https://github.com/GitbookIO/onboarding-template/blob/main/getting-started/broken-reference/README.md) section to learn more.
+想要从头开始学习编写内容？前往 [基础知识](https://github.com/GitbookIO/onboarding-template/blob/main/getting-started/broken-reference/README.md) 部分了解更多信息。
 {% endhint %}
 
-### Import
+### 导入
 
-GitBook supports importing content from many popular writing tools and formats. If your content already exists, you can upload a file or group of files to be imported.
+GitBook 支持从许多流行的写作工具和格式导入内容。如果您的内容已经存在，您可以上传要导入的文件或文件组。
 
 <div data-full-width="false"><figure><img src="https://gitbookio.github.io/onboarding-template-images/quickstart-import.png" alt=""><figcaption></figcaption></figure></div>
 
-### Sync a repository
+### 同步存储库
 
-GitBook also allows you to set up a bi-directional sync with an existing repository on GitHub or GitLab. Setting up Git Sync allows you and your team to write content in GitBook or in code, and never have to worry about your content becoming out of sync.
+GitBook 还允许您与 GitHub 或 GitLab 上的现有存储库建立双向同步。设置 Git Sync 可让您和您的团队在 GitBook 或代码中编写内容，而不必担心内容不同步。

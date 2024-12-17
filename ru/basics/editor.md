@@ -1,38 +1,38 @@
 ---
-icon: pen-to-square
+значок: pen-to-square
 ---
 
-# Editor
+# Редактор
 
-GitBook has a powerful block-based editor that allows you to seamlessly create, update, and enhance your content.
+GitBook имеет мощный редактор на основе блоков, который позволяет вам легко создавать, обновлять и улучшать ваш контент.
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/editor-hero.png" alt=""><figcaption></figcaption></figure>
 
-### Writing content
+### Написание контента
 
-GitBook offers a range of block types for you to add to your content inline — from simple text and tables, to code blocks and more. These elements will make your pages more useful to readers, and offer extra information and context.
+GitBook предлагает ряд типов блоков, которые вы можете добавлять в свой контент в строке — от простого текста и таблиц до блоков кода и многого другого. Эти элементы сделают ваши страницы более полезными для читателей и предоставят дополнительную информацию и контекст.
 
-Either start typing below, or press `/` to see a list of the blocks you can insert into your page.
+Либо начните вводить текст ниже, либо нажмите `/`, чтобы увидеть список блоков, которые вы можете вставить на свою страницу.
 
-### Add a new block
+### Добавить новый блок
 
 {% stepper %}
 {% step %}
-### Open the insert block menu
+### Открыть меню вставки блока
 
-Press `/` on your keyboard to open the insert block menu.
+Нажмите `/` на клавиатуре, чтобы открыть меню вставки блока.
 {% endstep %}
 
 {% step %}
-### Search for the block you need&#x20;
+### Найти нужный блок&#x20;
 
-Try searching for “Stepper”, for exampe, to insert the stepper block.
+Попробуйте выполнить поиск по запросу «Stepper», например, чтобы вставить блок stepper.
 {% endstep %}
 
 {% step %}
-### Insert and edit your block
+### Вставить и отредактировать блок
 
-Click or press Enter to insert your block. From here, you’ll be able to edit it as needed.
+Нажмите или Enter, чтобы вставить блок. Отсюда вы сможете отредактировать его по мере необходимости.
 {% endstep %}
 {% endstepper %}
 

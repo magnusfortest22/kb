@@ -1,12 +1,12 @@
 ---
-icon: globe-pointer
+значок: globe-pointer
 ---
 
-# Publish your docs
+# Опубликуйте свои документы
 
-Once you’ve finished writing, editing, or importing your content, you can publish your work to the web as a docs site. Once published, your site will be accessible online only to your selected audience.
+После того, как вы закончите писать, редактировать или импортировать свой контент, вы можете опубликовать свою работу в Интернете как сайт документов. После публикации ваш сайт будет доступен в Интернете только для выбранной вами аудитории.
 
-You can publish your site and find related settings from your docs site's homepage.
+Вы можете опубликовать свой сайт и найти соответствующие настройки на домашней странице вашего сайта документов.
 
 <figure><img src="https://gitbookio.github.io/onboarding-template-images/publish-hero.png" alt=""><figcaption></figcaption></figure>
 
