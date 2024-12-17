@@ -1,9 +1,11 @@
 name: Sync Directory Structure
 
 on:
-  push:
-    paths:
-      - "en/**"
+  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_run:
+    workflows: ['sync-translation-only-updated-files'] # Triggers when the specified workflow completes
+    types: 
+      - completed
 
 jobs:
   sync-structure:
