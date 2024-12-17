@@ -16,40 +16,79 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
-        python-version: '3.x'
+        node-version: '16'  # Ensure compatibility with your translation script
 
-    - name: Install Google Cloud dependencies
+    - name: Install dependencies
       run: |
-        pip install --upgrade google-cloud-translate
+        npm install node-fetch
 
-    - name: Translate Markdown files for all target languages
+    - name: Copy and Translate Files
       env:
-        GOOGLE_CLOUD_API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}
-        TARGET_LANGUAGES: "ru zh" # Add more language codes as needed
+        TARGET_LANGUAGES: "ru zh"  # List the target languages
       run: |
-        for lang in $TARGET_LANGUAGES; do
-          echo "Translating files to $lang"
-          export TARGET_LANGUAGE=$lang
-          python translate.py
-        done
-
-    - name: Copy only new or updated files to target languages
-      env:
-        TARGET_LANGUAGES: "ru zh" # Ensure this matches the languages above
-      run: |
+        # Iterate over each target language
         for lang in $TARGET_LANGUAGES; do
           mkdir -p $lang  # Ensure the directory exists
 
+          # Find all files in the 'en' directory
           for file in $(find en -type f); do
             relative_path=${file#en/}  # Get the relative file path
             target_file="$lang/$relative_path"
+            mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories
 
-            if [ ! -f "$target_file" ] || ! cmp -s "$file" "$target_file"; then
-              mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories
-              cp "$file" "$target_file"            # Copy the file
+            # Translate the content of the file
+            node -e "
+              const fs = require('fs');
+              const fetch = require('node-fetch');
+
+              async function translateText(text, targetLanguage = '$lang', sourceLanguage = 'en') {
+                const apiKey = 'AIzaSyCP5-GJVMKaNQePcHyCVZO9jmqeTrV8Px0';  // Replace with your own API key
+                const url = 'https://translation.googleapis.com/language/translate/v2?key=' + apiKey;
+                const body = JSON.stringify({ q: text, target: targetLanguage, source: sourceLanguage, format: 'text' });
+
+                try {
+                  const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: body
+                  });
+                  const data = await response.json();
+                  if (response.ok) {
+                    return data.data.translations[0].translatedText;
+                  } else {
+                    throw new Error(data.error.message);
+                  }
+                } catch (error) {
+                  console.error('Error translating text:', error);
+                  return null;
+                }
+              }
+
+              async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
+                try {
+                  const content = fs.readFileSync(inputFile, 'utf8');
+                  const translatedContent = await translateText(content, targetLanguage);
+                  if (translatedContent) {
+                    fs.writeFileSync(outputFile, translatedContent, 'utf8');
+                    console.log('Translation complete. The translated file is saved as:', outputFile);
+                  }
+                } catch (error) {
+                  console.error('Error processing the markdown file:', error);
+                }
+              }
+
+              const inputFile = '$file';
+              const outputFile = '$target_file';
+
+              translateMarkdownFile(inputFile, outputFile, '$lang');
+            "
+
+            # Copy the translated file into the target directory
+            if [ -f "$target_file" ]; then
+              cp "$target_file" "$lang/$relative_path"
             fi
           done
         done
