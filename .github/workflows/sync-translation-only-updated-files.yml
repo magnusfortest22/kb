@@ -31,7 +31,7 @@ jobs:
       id: modified-files
       run: |
         # Use GitHub Actions' context for the commit hashes (before and after)
-        modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'en/**')
+        modified_files=$(git diff --name-only --diff-filter=ACMRTUX ${{ github.event.before }} ${{ github.sha }} -- 'en/**')
         echo "modified_files=$modified_files" >> $GITHUB_ENV  # Set modified files as an environment variable
 
     - name: Copy and Translate Modified Files
@@ -60,7 +60,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git add -A ru zh
+        git add -A  # Add all modified files including new ones
         git diff --cached --quiet || git commit -m "Sync modified files from 'en' to target language directories"
         git pull origin main --rebase
         git push origin main
