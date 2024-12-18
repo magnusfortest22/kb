@@ -17,3 +17,7 @@
 * [Interactive blocks](basics/interactive-blocks.md)
 * [OpenAPI](basics/openapi.md)
 * [Integrations](basics/integrations.md)
+
+## Custom
+
+* [Test code block](custom/test-code-block.md)
