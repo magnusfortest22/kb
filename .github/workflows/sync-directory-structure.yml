@@ -36,14 +36,15 @@ jobs:
             rsync -av --delete --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
           done
 
-      - name: Commit and Push Changes
+      - name: Configure Git user
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          
-          # Check for changes and commit
           if [ -n "$(git status --porcelain)" ]; then
             git add .
             git commit -m "Sync directory structure to match 'en'"
