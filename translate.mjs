@@ -51,31 +51,38 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
 
     // Split the content into lines
     const lines = modifiedContent.split('\n').map(line => {
-      if (isSummaryFile && (line.startsWith('#') || line.startsWith('##'))) {
-        return line;  // If it's a header line in SUMMARY.md, leave it as is
+      if (line.startsWith('#') || line.startsWith('##')) {
+        return { original: line, translated: line };  // Keep headers as they are
       } else {
-        return null; // Otherwise, mark the line for translation
+        return { original: line, translated: null }; // Mark for translation
       }
     });
 
-    // Filter out the null values (which were lines with headers in SUMMARY.md) and translate the rest
-    const textToTranslate = lines.filter(line => line !== null).join('\n');
+    // Extract all lines that need translation
+    const textToTranslate = lines
+      .filter(line => line.translated === null)
+      .map(line => line.original)
+      .join('\n');
 
+    // Translate the text
     const translatedText = await translateText(textToTranslate, targetLanguage);
 
     if (translatedText) {
-      // Rebuild the content, inserting the translated text back where appropriate
-      let translatedLinesIndex = 0;
-      const finalContent = lines.map(line => {
-        if (line === null) {
-          return translatedText.split('\n')[translatedLinesIndex++] || ''; // Place the translated text
-        } else {
-          return line; // Keep header lines intact
-        }
-      }).join('\n');
+      // Split the translated text into lines
+      const translatedLines = translatedText.split('\n');
+      let translatedLineIndex = 0;
 
-      // Prepend the YAML front matter (if any)
-      const finalContentWithYaml = yamlFrontMatter + finalContent;
+      // Rebuild the content, inserting the translated text where appropriate
+      const finalContent = lines.map(line => {
+        if (line.translated === null) {
+          return { ...line, translated: translatedLines[translatedLineIndex++] };
+        } else {
+          return line;  // Keep headers intact
+        }
+      });
+
+      // Join the final content into a string
+      const finalContentWithYaml = yamlFrontMatter + finalContent.map(line => line.translated).join('\n');
 
       // Write the final content to the output file
       writeFileSync(outputFile, finalContentWithYaml, 'utf8');

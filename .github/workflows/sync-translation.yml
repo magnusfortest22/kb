@@ -1,6 +1,7 @@
 name: Sync and Translate Files
 
-# on:
+on:
+  
 #   push:
 #     paths:
 #       - 'en/**'  # Trigger on changes in the 'en' directory
