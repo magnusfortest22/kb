@@ -45,7 +45,7 @@ jobs:
     - name: Copy and Translate Files
       env:
         TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
-        API_KEY: ${{ secrets.TRANSLATION_API_KEY }}  # Pass the API key from GitHub Secrets
+        API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}  # Pass the API key from GitHub Secrets
       run: |
         # Iterate over each target language (ru, zh)
         for lang in $TARGET_LANGUAGES; do
