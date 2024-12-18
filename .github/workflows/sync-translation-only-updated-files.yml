@@ -58,12 +58,15 @@ jobs:
 
           # Iterate through each changed file
           for file in $changed_files; do
+            # Quote file paths to handle spaces
+            file=$(echo "$file" | sed 's/ /\\ /g')  # Escape spaces in the file path
+
             relative_path=${file#en/}  # Get the relative file path from 'en'
             target_file="$lang/$relative_path"
             mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
 
             # Run the ESM translation script for each file
-            echo "Translating $file to $lang..."
+            echo "Translating \"$file\" to $lang..."
             node translate.mjs "$file" "$target_file" "$lang" "$API_KEY"
           done
         done
