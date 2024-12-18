@@ -46,19 +46,18 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
       modifiedContent = content.replace(yamlFrontMatterRegex, ''); // Remove the YAML front matter for translation
     }
 
-    // Check if the file is SUMMARY.md
-    const isSummaryFile = inputFile.toLowerCase().endsWith('summary.md');
-
-    // Split the content into lines
+    // Split the content into lines and keep track of empty lines
     const lines = modifiedContent.split('\n').map(line => {
       if (line.startsWith('#') || line.startsWith('##')) {
         return { original: line, translated: line };  // Keep headers as they are
+      } else if (line.trim() === '') {
+        return { original: line, translated: '' }; // Keep blank lines intact
       } else {
         return { original: line, translated: null }; // Mark for translation
       }
     });
 
-    // Extract all lines that need translation
+    // Extract all lines that need translation (lines marked with translated: null)
     const textToTranslate = lines
       .filter(line => line.translated === null)
       .map(line => line.original)
@@ -77,7 +76,7 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
         if (line.translated === null) {
           return { ...line, translated: translatedLines[translatedLineIndex++] };
         } else {
-          return line;  // Keep headers intact
+          return line;  // Keep headers and blank lines intact
         }
       });
 
