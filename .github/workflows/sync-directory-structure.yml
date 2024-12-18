@@ -8,20 +8,17 @@ on:
     paths:
       - 'en/**'  # Trigger for PRs on changes in 'en' directory
 
-
 jobs:
   sync-structure:
-    name: Sleep for 60 seconds
-    run: sleep 60s
-    shell: bash
-
     name: Sync Directory Structure
     runs-on: ubuntu-latest
-    needs: sync-translation-only-updated-files
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Sleep for 60 seconds
+        run: sleep 60
 
       - name: Sync directory structure
         run: |
@@ -30,9 +27,11 @@ jobs:
 
           # Sync structure for each language directory
           for LANG in "${LANG_DIRS[@]}"; do
+            echo "Syncing structure for: $LANG"
+            
             # Ensure all files and directories in 'en' exist in the target directory
             rsync -av --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
-            
+
             # Remove files/directories in the target directory that no longer exist in 'en'
             rsync -av --delete --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
           done
@@ -48,6 +47,6 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add .
             git commit -m "Sync directory structure to match 'en'"
-            git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+            git push
           else
             echo "No changes to commit."
