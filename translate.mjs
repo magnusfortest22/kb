@@ -4,8 +4,7 @@ import fetch from 'node-fetch';
 // Regular expression to match YAML front matter (enclosed by ---)
 const yamlFrontMatterRegex = /^---\n([\s\S]*?)\n---/;
 
-async function translateText(text, targetLanguage = 'ru', sourceLanguage = 'en') {
-  const apiKey = 'AIzaSyCP5-GJVMKaNQePcHyCVZO9jmqeTrV8Px0'; // Replace with your API key
+async function translateText(text, targetLanguage, sourceLanguage = 'en', apiKey) {
   const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
   const body = JSON.stringify({ q: text, target: targetLanguage, source: sourceLanguage, format: 'text' });
 
@@ -27,9 +26,9 @@ async function translateText(text, targetLanguage = 'ru', sourceLanguage = 'en')
   }
 }
 
-async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
+async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiKey) {
   try {
-    // Ensure content is read as a string
+    // Read the file content
     const content = readFileSync(inputFile, 'utf8');
     if (typeof content !== 'string') {
       throw new Error('File content is not a string');
@@ -41,37 +40,36 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
     let modifiedContent = content;
 
     if (match) {
-      // If YAML front matter exists, store and remove it from the content
       yamlFrontMatter = match[0]; // Capture the YAML front matter
-      modifiedContent = content.replace(yamlFrontMatterRegex, ''); // Remove the YAML front matter for translation
+      modifiedContent = content.replace(yamlFrontMatterRegex, ''); // Remove it from the content for translation
     }
 
-    // Split the content into lines and keep track of empty lines
+    // Split the content into lines and mark non-header/non-blank lines for translation
     const lines = modifiedContent.split('\n').map(line => {
       if (line.startsWith('#') || line.startsWith('##')) {
-        return { original: line, translated: line };  // Keep headers as they are
+        return { original: line, translated: line };  // Keep headers as is
       } else if (line.trim() === '') {
-        return { original: line, translated: '' }; // Keep blank lines intact
+        return { original: line, translated: '' };  // Keep blank lines intact
       } else {
-        return { original: line, translated: null }; // Mark for translation
+        return { original: line, translated: null };  // Mark for translation
       }
     });
 
-    // Extract all lines that need translation (lines marked with translated: null)
+    // Extract text to translate
     const textToTranslate = lines
       .filter(line => line.translated === null)
       .map(line => line.original)
       .join('\n');
 
     // Translate the text
-    const translatedText = await translateText(textToTranslate, targetLanguage);
+    const translatedText = await translateText(textToTranslate, targetLanguage, 'en', apiKey);
 
     if (translatedText) {
       // Split the translated text into lines
       const translatedLines = translatedText.split('\n');
       let translatedLineIndex = 0;
 
-      // Rebuild the content, inserting the translated text where appropriate
+      // Rebuild the final content
       const finalContent = lines.map(line => {
         if (line.translated === null) {
           return { ...line, translated: translatedLines[translatedLineIndex++] };
@@ -80,21 +78,29 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
         }
       });
 
-      // Join the final content into a string
-      const finalContentWithYaml = yamlFrontMatter + finalContent.map(line => line.translated).join('\n');
+      // Combine YAML front matter with the translated content
+      const finalContentWithYaml = yamlFrontMatter + '\n' + finalContent.map(line => line.translated).join('\n');
 
-      // Write the final content to the output file
+      // Write to the output file
       writeFileSync(outputFile, finalContentWithYaml, 'utf8');
-      console.log('Translation complete. The translated file is saved as:', outputFile);
+      console.log('Translation complete. File saved as:', outputFile);
+    } else {
+      console.error('Translation failed. No changes were written.');
     }
   } catch (error) {
     console.error('Error processing the markdown file:', error);
   }
 }
 
-// Read command-line arguments for input/output paths and language
+// Read command-line arguments
 const inputFile = process.argv[2];
 const outputFile = process.argv[3];
-const lang = process.argv[4];
+const targetLanguage = process.argv[4];
+const apiKey = process.argv[5];
 
-translateMarkdownFile(inputFile, outputFile, lang);
+if (!inputFile || !outputFile || !targetLanguage || !apiKey) {
+  console.error('Usage: node translate.mjs <inputFile> <outputFile> <targetLanguage> <apiKey>');
+  process.exit(1);
+}
+
+translateMarkdownFile(inputFile, outputFile, targetLanguage, apiKey);

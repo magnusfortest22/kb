@@ -45,6 +45,7 @@ jobs:
     - name: Copy and Translate Files
       env:
         TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
+        API_KEY: ${{ secrets.TRANSLATION_API_KEY }}  # Pass the API key from GitHub Secrets
       run: |
         # Iterate over each target language (ru, zh)
         for lang in $TARGET_LANGUAGES; do
@@ -61,7 +62,7 @@ jobs:
 
             # Run the ESM translation script for each file
             echo "Translating $file to $lang..."
-            node translate.mjs "$file" "$target_file" "$lang"
+            node translate.mjs "$file" "$target_file" "$lang" "$API_KEY"
           done
         done
 
