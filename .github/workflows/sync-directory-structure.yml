@@ -51,3 +51,4 @@ jobs:
             git push
           else
             echo "No changes to commit."
+          fi  # <-- Added missing 'fi' here
