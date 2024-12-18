@@ -40,7 +40,9 @@ jobs:
         fi
 
         echo "Changed files: $changed_files"
-        echo "::set-output name=changed_files::$changed_files"
+
+        # Store the changed files to an environment variable for later use
+        echo "CHANGED_FILES=$changed_files" >> $GITHUB_ENV
 
     - name: Copy and Translate Files
       env:
@@ -51,8 +53,8 @@ jobs:
         for lang in $TARGET_LANGUAGES; do
           mkdir -p $lang  # Ensure the target language directory exists
 
-          # Get the list of changed files
-          changed_files="${{ steps.changed-files.outputs.changed_files }}"
+          # Get the list of changed files from the environment variable
+          changed_files="${CHANGED_FILES}"
 
           # Iterate through each changed file
           for file in $changed_files; do
