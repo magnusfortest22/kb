@@ -3,14 +3,18 @@ name: Sync Directory Structure
 on:
   push:
     paths:
-      - 'ru/**'  # Trigger on changes in the 'en' directory
+      - 'en/**'  # Trigger on changes in the 'en' directory
   pull_request:
     paths:
-      - 'ru/**'  # Trigger for PRs on changes in 'en' directory
+      - 'en/**'  # Trigger for PRs on changes in 'en' directory
 
 
 jobs:
   sync-structure:
+    name: Sleep for 60 seconds
+    run: sleep 60s
+    shell: bash
+
     name: Sync Directory Structure
     runs-on: ubuntu-latest
     needs: sync-translation-only-updated-files
