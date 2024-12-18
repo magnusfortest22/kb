@@ -21,3 +21,10 @@
 ## Custom
 
 * [Test code block](custom/test-code-block.md)
+
+## CG2
+
+* [CG 2](cg2/cg-2.md)
+* [Custom2](cg2/custom2/README.md)
+  * [dive deep](cg2/custom2/dive-deep/README.md)
+    * [Page 1](cg2/custom2/dive-deep/page-1.md)
