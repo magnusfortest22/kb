@@ -5,9 +5,9 @@
 ## Getting Started
 
 * [Quickstart](getting-started/quickstart.md)
+* [Custom Page by Manpreet](getting-started/custom-page-by-manpreet.md)
 * [Publish your docs](getting-started/publish-your-docs.md)
 * [Page for test](getting-started/page-for-test.md)
-* [Custom Page by Manpreet](getting-started/custom-page-by-manpreet.md)
 
 ## Basics
 
