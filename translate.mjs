@@ -46,15 +46,39 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage) {
       modifiedContent = content.replace(yamlFrontMatterRegex, ''); // Remove the YAML front matter for translation
     }
 
-    // Translate the remaining content (without YAML front matter)
-    const translatedContent = await translateText(modifiedContent, targetLanguage);
+    // Check if the file is SUMMARY.md
+    const isSummaryFile = inputFile.toLowerCase().endsWith('summary.md');
 
-    if (translatedContent) {
-      // Reinsert the YAML front matter back into the translated content
-      const finalContent = yamlFrontMatter + translatedContent;
+    // Split the content into lines
+    const lines = modifiedContent.split('\n').map(line => {
+      if (isSummaryFile && (line.startsWith('#') || line.startsWith('##'))) {
+        return line;  // If it's a header line in SUMMARY.md, leave it as is
+      } else {
+        return null; // Otherwise, mark the line for translation
+      }
+    });
+
+    // Filter out the null values (which were lines with headers in SUMMARY.md) and translate the rest
+    const textToTranslate = lines.filter(line => line !== null).join('\n');
+
+    const translatedText = await translateText(textToTranslate, targetLanguage);
+
+    if (translatedText) {
+      // Rebuild the content, inserting the translated text back where appropriate
+      let translatedLinesIndex = 0;
+      const finalContent = lines.map(line => {
+        if (line === null) {
+          return translatedText.split('\n')[translatedLinesIndex++] || ''; // Place the translated text
+        } else {
+          return line; // Keep header lines intact
+        }
+      }).join('\n');
+
+      // Prepend the YAML front matter (if any)
+      const finalContentWithYaml = yamlFrontMatter + finalContent;
 
       // Write the final content to the output file
-      writeFileSync(outputFile, finalContent, 'utf8');
+      writeFileSync(outputFile, finalContentWithYaml, 'utf8');
       console.log('Translation complete. The translated file is saved as:', outputFile);
     }
   } catch (error) {
