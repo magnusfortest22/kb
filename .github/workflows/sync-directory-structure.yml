@@ -29,11 +29,20 @@ jobs:
           for LANG in "${LANG_DIRS[@]}"; do
             echo "Syncing structure for: $LANG"
             
-            # Ensure all files and directories in 'en' exist in the target directory
-            rsync -av --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
+            # Create missing directories in the target language directory
+            find en -type d -exec mkdir -p "$LANG/{}" \;
 
-            # Remove files/directories in the target directory that no longer exist in 'en'
-            rsync -av --delete --exclude=".git" --include="*/" --exclude="*" en/ "$LANG/"
+            # Copy files from 'en' to target directory if they exist in 'en'
+            find en -type f -exec bash -c 'if [ -f "{}" ]; then cp --parents "{}" "$LANG"; fi' \;
+
+            # Remove files that exist in the target language directory but not in 'en'
+            find "$LANG" -type f | while read -r file; do
+              rel_path="${file#"$LANG/"}"
+              if [ ! -f "en/$rel_path" ]; then
+                echo "Removing $file"
+                rm "$file"
+              fi
+            done
           done
 
       - name: Configure Git user
@@ -51,4 +60,4 @@ jobs:
             git push
           else
             echo "No changes to commit."
-          fi  # <-- Added missing 'fi' here
+          fi
