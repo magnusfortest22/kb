@@ -1,3 +1,4 @@
+
 # Table of contents
 
 * [Добро пожаловать](README.md)
@@ -17,3 +18,7 @@
 * [Интерактивные блоки](basics/interactive-blocks.md)
 * [OpenAPI](basics/openapi.md)
 * [Интеграции](basics/integrations.md)
+
+## Custom
+
+* [Тестовый код блок](custom/test-code-block.md)
