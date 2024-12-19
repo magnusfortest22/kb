@@ -60,12 +60,20 @@ jobs:
 
           mkdir -p "$(dirname "$target_file")"
 
-          if [[ "$source_file" == *.md ]]; then
-            echo "Translating \"$source_file\" to \"$lang\"..."
-            node translate.mjs "$source_file" "$target_file" "$lang" "$API_KEY"
+          if [ -f "$source_file" ]; then
+            if [[ "$source_file" == *.md ]]; then
+              echo "Translating \"$source_file\" to \"$lang\"..."
+              if node translate.mjs "$source_file" "$target_file" "$lang" "$API_KEY"; then
+                echo "Translation complete: $target_file"
+              else
+                echo "Translation failed for: $source_file"
+              fi
+            else
+              echo "Copying \"$source_file\" to \"$target_file\"..."
+              cp "$source_file" "$target_file" || echo "Failed to copy $source_file"
+            fi
           else
-            echo "Copying \"$source_file\" to \"$target_file\"..."
-            cp "$source_file" "$target_file"
+            echo "Source file does not exist: $source_file"
           fi
         done
 
