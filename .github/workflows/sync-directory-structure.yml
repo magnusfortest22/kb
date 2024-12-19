@@ -42,6 +42,15 @@ jobs:
             done
           done
 
+      - name: Copy .gitbook/assets to all languages
+        run: |
+          LANG_DIRS=("ru" "zh")
+          for LANG in "${LANG_DIRS[@]}"; do
+            echo "Copying .gitbook/assets to $LANG"
+            mkdir -p "$LANG/.gitbook/assets"
+            cp -r en/.gitbook/assets/* "$LANG/.gitbook/assets/"
+          done
+
       - name: Configure Git user
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
