@@ -20,8 +20,8 @@
 
 ## Custom
 
-* [Test code block](custom/test-code-block.md)
 * [My test Page](custom/my-test-page.md)
+* [Test code block](custom/test-code-block.md)
 
 ## CG2
 
