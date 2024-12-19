@@ -3,10 +3,10 @@ name: Sync and Translate Files
 on:
   push:
     paths:
-      - 'en/**'  # Trigger on changes in the 'en' directory
+      - 'en/**'
   pull_request:
     paths:
-      - 'en/**'  # Trigger for PRs on changes in 'en' directory
+      - 'en/**'
 
 jobs:
   sync-and-translate:
@@ -19,55 +19,55 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'  # Specify your Node.js version
+        node-version: '16'
 
     - name: Install dependencies
       run: |
-        npm install node-fetch  # Install necessary packages for translation script
+        npm install node-fetch
 
     - name: Find missing files
       id: find-missing-files
       run: |
-        LANG_DIRS="ru zh"  # List the target language directories
-        MISSING_FILES=""
+        LANG_DIRS="ru zh"
+        echo "LANG_DIRS=$LANG_DIRS" >> $GITHUB_ENV
+        > missing_files.txt  # Clear any old content
         
         for lang in $LANG_DIRS; do
-          mkdir -p $lang  # Ensure language directory exists
+          mkdir -p $lang
           for file in $(find en -type f); do
             relative_path=${file#en/}
             if [ ! -f "$lang/$relative_path" ]; then
-              MISSING_FILES+="$lang:$relative_path\n"
+              echo "$lang:$relative_path" >> missing_files.txt
             fi
           done
         done
 
-        echo -e "$MISSING_FILES" > missing_files.txt
+        echo "MISSING_FILES=$(cat missing_files.txt | tr '\n' ';')" >> $GITHUB_ENV
         cat missing_files.txt
-        echo "MISSING_FILES=$(cat missing_files.txt)" >> $GITHUB_ENV
 
     - name: Sync and Translate Files
       env:
         MISSING_FILES: ${{ env.MISSING_FILES }}
         API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}
       run: |
-        while IFS= read -r line; do
-          lang=$(echo "$line" | cut -d: -f1)
-          relative_path=$(echo "$line" | cut -d: -f2)
+        IFS=';' read -ra files <<< "$MISSING_FILES"
+        
+        for entry in "${files[@]}"; do
+          lang=$(echo "$entry" | cut -d: -f1)
+          relative_path=$(echo "$entry" | cut -d: -f2)
           source_file="en/$relative_path"
           target_file="$lang/$relative_path"
 
-          mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
+          mkdir -p "$(dirname "$target_file")"
 
           if [[ "$source_file" == *.md ]]; then
-            # Translate markdown files
             echo "Translating \"$source_file\" to \"$lang\"..."
             node translate.mjs "$source_file" "$target_file" "$lang" "$API_KEY"
           else
-            # Copy other file types as is
             echo "Copying \"$source_file\" to \"$target_file\"..."
             cp "$source_file" "$target_file"
           fi
-        done < missing_files.txt
+        done
 
     - name: Configure Git user
       run: |
@@ -78,7 +78,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git add -A ru zh  # Add changes for target language directories
+        git add -A ru zh
         git diff --cached --quiet || git commit -m "Sync missing files from 'en' to target languages"
         git pull origin main --rebase
         git push origin main
