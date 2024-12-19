@@ -1,12 +1,9 @@
 name: Sync Directory Structure
 
 on:
-  # push:
-  #   paths:
-  #     - 'en/**'  # Trigger on changes in the 'en' directory
-  # pull_request:
-  #   paths:
-  #     - 'en/**'  # Trigger for PRs on changes in 'en' directory
+  push:
+    paths:
+      - 'en/**'  # Trigger for PRs on changes in 'en' directory
 
 jobs:
   sync-structure:
@@ -33,7 +30,7 @@ jobs:
             find en -type d -exec mkdir -p "$LANG/{}" \;
 
             # Copy files from 'en' to target directory if they exist in 'en'
-            find en -type f -exec bash -c 'if [ -f "{}" ]; then cp --parents "{}" "$LANG"; fi' \;
+            find en -type f -exec bash -c 'cp --parents "{}" "$LANG"' \;
 
             # Remove files that exist in the target language directory but not in 'en'
             find "$LANG" -type f | while read -r file; do
