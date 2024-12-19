@@ -25,32 +25,41 @@ jobs:
       run: |
         npm install node-fetch
 
-    - name: Find missing files
-      id: find-missing-files
+    - name: Identify changed or missing files
+      id: find-changed-files
       run: |
         LANG_DIRS="ru zh"
         echo "LANG_DIRS=$LANG_DIRS" >> $GITHUB_ENV
-        > missing_files.txt  # Clear any old content
+        > changed_files.txt  # Clear previous content
         
+        # Identify changed files in 'en'
+        if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
+          git fetch --depth=2
+          CHANGED_FILES=$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- 'en/*')
+        elif [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'en/*')
+        fi
+
         for lang in $LANG_DIRS; do
           mkdir -p $lang
           for file in $(find en -type f); do
             relative_path=${file#en/}
-            if [ ! -f "$lang/$relative_path" ]; then
-              echo "$lang:$relative_path" >> missing_files.txt
+            target_file="$lang/$relative_path"
+            if [ ! -f "$target_file" ] || echo "$CHANGED_FILES" | grep -q "$file"; then
+              echo "$lang:$relative_path" >> changed_files.txt
             fi
           done
         done
 
-        echo "MISSING_FILES=$(cat missing_files.txt | tr '\n' ';')" >> $GITHUB_ENV
-        cat missing_files.txt
+        echo "CHANGED_FILES=$(cat changed_files.txt | tr '\n' ';')" >> $GITHUB_ENV
+        cat changed_files.txt
 
     - name: Sync and Translate Files
       env:
-        MISSING_FILES: ${{ env.MISSING_FILES }}
+        CHANGED_FILES: ${{ env.CHANGED_FILES }}
         API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}
       run: |
-        IFS=';' read -ra files <<< "$MISSING_FILES"
+        IFS=';' read -ra files <<< "$CHANGED_FILES"
         
         for entry in "${files[@]}"; do
           lang=$(echo "$entry" | cut -d: -f1)
@@ -87,6 +96,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git add -A ru zh
-        git diff --cached --quiet || git commit -m "Sync missing files from 'en' to target languages"
+        git diff --cached --quiet || git commit -m "Sync changed and new files from 'en' to target languages"
         git pull origin main --rebase
         git push origin main
