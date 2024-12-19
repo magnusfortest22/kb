@@ -23,6 +23,7 @@
 
 * [Мой тест Страница](custom/my-test-page/README.md)
   * [Тестовый блок кода](custom/my-test-page/test-code-block.md)
+  * [Тестовый новый блок кода](custom/my-test-page/codeblock-test-new.md)
 
 ## CG2
 

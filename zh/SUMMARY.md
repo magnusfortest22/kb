@@ -23,6 +23,7 @@
 
 * [我的测试页面](custom/my-test-page/README.md)
   * [测试代码块](custom/my-test-page/test-code-block.md)
+  * [Codeblock 测试新](custom/my-test-page/codeblock-test-new.md)
 
 ## CG2
 
