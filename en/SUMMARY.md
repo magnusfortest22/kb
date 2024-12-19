@@ -23,10 +23,10 @@
 * [My test Page](custom/my-test-page/README.md)
   * [Test code block](custom/my-test-page/test-code-block.md)
   * [Codeblock Test New](custom/my-test-page/codeblock-test-new.md)
+  * [CG 2](custom/my-test-page/cg-2.md)
 
 ## CG2
 
-* [CG 2](cg2/cg-2.md)
 * [Custom2](cg2/custom2/README.md)
   * [dive deep](cg2/custom2/dive-deep/README.md)
     * [Page 1](cg2/custom2/dive-deep/page-1.md)
