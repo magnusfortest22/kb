@@ -9,7 +9,7 @@ on:
       - 'en/**'  # Trigger for PRs on changes in 'en' directory
 
 jobs:
-  translate-and-copy:
+  sync-and-translate:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,53 +23,51 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # Install dependencies for your ESM script
-        npm install node-fetch
+        npm install node-fetch  # Install necessary packages for translation script
 
-    - name: Get changed files
-      id: changed-files
+    - name: Find missing files
+      id: find-missing-files
       run: |
-        # Get the list of changed files in the 'en' directory
-        if [ "${GITHUB_EVENT_NAME}" == "push" ]; then
-          # For push events, compare with the previous commit
-          git fetch --depth=2  # Ensure we have the previous commit
-          changed_files=$(git diff --name-only ${{ github.sha }}^ ${{ github.sha }} -- 'en/*')
-        elif [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
-          # For pull request events, compare with the base commit of the PR
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'en/*')
-        fi
-
-        echo "Changed files: $changed_files"
-
-        # Store the changed files to an environment variable for later use
-        echo "CHANGED_FILES=$changed_files" >> $GITHUB_ENV
-
-    - name: Copy and Translate Files
-      env:
-        TARGET_LANGUAGES: "ru zh"  # List the target languages (ru, zh)
-        API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}  # Pass the API key from GitHub Secrets
-      run: |
-        # Iterate over each target language (ru, zh)
-        for lang in $TARGET_LANGUAGES; do
-          mkdir -p $lang  # Ensure the target language directory exists
-
-          # Get the list of changed files from the environment variable
-          changed_files="${CHANGED_FILES}"
-
-          # Iterate through each changed file
-          for file in $changed_files; do
-            # Quote file paths to handle spaces
-            file=$(echo "$file" | sed 's/ /\\ /g')  # Escape spaces in the file path
-
-            relative_path=${file#en/}  # Get the relative file path from 'en'
-            target_file="$lang/$relative_path"
-            mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
-
-            # Run the ESM translation script for each file
-            echo "Translating \"$file\" to $lang..."
-            node translate.mjs "$file" "$target_file" "$lang" "$API_KEY"
+        LANG_DIRS="ru zh"  # List the target language directories
+        MISSING_FILES=""
+        
+        for lang in $LANG_DIRS; do
+          mkdir -p $lang  # Ensure language directory exists
+          for file in $(find en -type f); do
+            relative_path=${file#en/}
+            if [ ! -f "$lang/$relative_path" ]; then
+              MISSING_FILES+="$lang:$relative_path\n"
+            fi
           done
         done
+
+        echo -e "$MISSING_FILES" > missing_files.txt
+        cat missing_files.txt
+        echo "MISSING_FILES=$(cat missing_files.txt)" >> $GITHUB_ENV
+
+    - name: Sync and Translate Files
+      env:
+        MISSING_FILES: ${{ env.MISSING_FILES }}
+        API_KEY: ${{ secrets.GOOGLE_CLOUD_API_KEY }}
+      run: |
+        while IFS= read -r line; do
+          lang=$(echo "$line" | cut -d: -f1)
+          relative_path=$(echo "$line" | cut -d: -f2)
+          source_file="en/$relative_path"
+          target_file="$lang/$relative_path"
+
+          mkdir -p "$(dirname "$target_file")"  # Create necessary subdirectories in target
+
+          if [[ "$source_file" == *.md ]]; then
+            # Translate markdown files
+            echo "Translating \"$source_file\" to \"$lang\"..."
+            node translate.mjs "$source_file" "$target_file" "$lang" "$API_KEY"
+          else
+            # Copy other file types as is
+            echo "Copying \"$source_file\" to \"$target_file\"..."
+            cp "$source_file" "$target_file"
+          fi
+        done < missing_files.txt
 
     - name: Configure Git user
       run: |
@@ -80,7 +78,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git add -A ru zh  # Add all changes (new files in 'ru' and 'zh' directories)
-        git diff --cached --quiet || git commit -m "Sync files from 'en' to target language directories"
+        git add -A ru zh  # Add changes for target language directories
+        git diff --cached --quiet || git commit -m "Sync missing files from 'en' to target languages"
         git pull origin main --rebase
         git push origin main
