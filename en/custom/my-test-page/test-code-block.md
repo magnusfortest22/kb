@@ -16,7 +16,7 @@ Test
 }
 ```
 
-### Testing
+### Testing my code
 
 ```javascript
 console.log(Script)
