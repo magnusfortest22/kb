@@ -44,21 +44,24 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiK
       modifiedContent = content.replace(yamlFrontMatterRegex, ''); // Remove it from the content for translation
     }
 
-    // Split the content into lines and mark non-header/non-blank lines for translation
+    // Split content into lines and analyze
     const lines = modifiedContent.split('\n').map(line => {
+      const matchIndentation = line.match(/^(\s*)/); // Capture leading whitespace
+      const leadingWhitespace = matchIndentation ? matchIndentation[0] : '';
+
       if (line.startsWith('#') || line.startsWith('##')) {
-        return { original: line, translated: line };  // Keep headers as is
+        return { original: line, translated: line, leadingWhitespace }; // Keep headers as is
       } else if (line.trim() === '') {
-        return { original: line, translated: '' };  // Keep blank lines intact
+        return { original: line, translated: '', leadingWhitespace }; // Blank lines intact
       } else {
-        return { original: line, translated: null };  // Mark for translation
+        return { original: line, translated: null, leadingWhitespace }; // Mark for translation
       }
     });
 
     // Extract text to translate
     const textToTranslate = lines
       .filter(line => line.translated === null)
-      .map(line => line.original)
+      .map(line => line.original.trim()) // Remove leading/trailing whitespace for translation
       .join('\n');
 
     // Translate the text
@@ -69,17 +72,18 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiK
       const translatedLines = translatedText.split('\n');
       let translatedLineIndex = 0;
 
-      // Rebuild the final content
+      // Rebuild the final content with preserved indentation
       const finalContent = lines.map(line => {
         if (line.translated === null) {
-          return { ...line, translated: translatedLines[translatedLineIndex++] };
+          const translated = translatedLines[translatedLineIndex++];
+          return `${line.leadingWhitespace}${translated}`; // Reapply leading whitespace
         } else {
-          return line;  // Keep headers and blank lines intact
+          return line.original; // Keep headers and blank lines intact
         }
       });
 
       // Combine YAML front matter with the translated content
-      const finalContentWithYaml = yamlFrontMatter + '\n' + finalContent.map(line => line.translated).join('\n');
+      const finalContentWithYaml = yamlFrontMatter + '\n' + finalContent.join('\n');
 
       // Write to the output file
       writeFileSync(outputFile, finalContentWithYaml, 'utf8');
@@ -91,6 +95,7 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiK
     console.error('Error processing the markdown file:', error);
   }
 }
+
 
 // Read command-line arguments
 const inputFile = process.argv[2];
