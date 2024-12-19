@@ -21,6 +21,7 @@
 ## Custom
 
 * [Test code block](custom/test-code-block.md)
+* [My test Page](custom/my-test-page.md)
 
 ## CG2
 
@@ -28,4 +29,3 @@
 * [Custom2](cg2/custom2/README.md)
   * [dive deep](cg2/custom2/dive-deep/README.md)
     * [Page 1](cg2/custom2/dive-deep/page-1.md)
-* [Page](cg2/page.md)
