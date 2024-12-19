@@ -22,6 +22,7 @@
 
 * [My test Page](custom/my-test-page/README.md)
   * [Test code block](custom/my-test-page/test-code-block.md)
+  * [Codeblock Test New](custom/my-test-page/codeblock-test-new.md)
 
 ## CG2
 
