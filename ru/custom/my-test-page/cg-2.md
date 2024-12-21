@@ -7,4 +7,4 @@ description: Not having it test
 
 `имя`
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://d1syadtv5cx0g6.cloudfront.net/blog/3469355168-wrapup-banner_06.png" alt=""><figcaption></figcaption></figure>
