@@ -16,6 +16,26 @@ Want to learn about writing content from scratch? Head to the [Basics](https://g
 
 GitBook supports importing content from many popular writing tools and formats. If your content already exists, you can upload a file or group of files to be imported.
 
+
+
+
+
+
+
+
+
+<figure><img src="http://pre-release-live.o18-test.com/api/public/knowledge-base-creatives.php?url=https%3A%2F%2Fd1syadtv5cx0g6.cloudfront.net%2Fblog%2F3521046916-id-790.jpg" alt=""><figcaption></figcaption></figure>
+
+
+
+
+
+
+
+
+
+
+
 <div data-full-width="false"><figure><img src="https://gitbookio.github.io/onboarding-template-images/quickstart-import.png" alt=""><figcaption></figcaption></figure></div>
 
 ### Sync a repository
