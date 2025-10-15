@@ -23,7 +23,7 @@ coverY: 0
 
 <figure><img src="http://pre-release-live.o18-test.com/api/public/knowledge-base-creatives.php?url=https%3A%[%E2%80%A6]tv5cx0g6.cloudfront.net%2Fblog%2F3521046916-id-790.jpg" alt=""><figcaption></figcaption></figure>
 
-
+Тестовые изменения ========================================
 
 <figure><img src="http://pre-release-live.o18-test.com/api/public/knowledge-base-creatives.php?url=https%3A%[%E2%80%A6]tv5cx0g6.cloudfront.net%2Fblog%2F3521046916-id-790.jpg" alt=""><figcaption></figcaption></figure>
 
