@@ -28,6 +28,25 @@ async function translateText(text, targetLanguage, sourceLanguage = 'en', apiKey
 
 const codeBlockRegex = /(```[\s\S]*?```|<script[\s\S]*?>[\s\S]*?<\/script>|<code[\s\S]*?>[\s\S]*?<\/code>)/g;
 
+/* 🆕 [ADDED FUNCTION] Add lang parameter to all URLs in the text */
+function addLangParamToUrls(text, langCode) {
+  // Match typical URLs (http, https)
+  const urlRegex = /(https?:\/\/[^\s)'"<>]+)/g;
+  return text.replace(urlRegex, (url) => {
+    try {
+      const urlObj = new URL(url);
+      // Avoid duplicates if lang already exists
+      if (!urlObj.searchParams.has('lang')) {
+        urlObj.searchParams.append('lang', langCode);
+      }
+      return urlObj.toString();
+    } catch {
+      return url; // leave invalid URLs untouched
+    }
+  });
+}
+/* 🆕 [END OF ADDED FUNCTION] */
+
 async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiKey) {
   try {
     // Read the file content
@@ -94,8 +113,12 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiK
       // Reinsert code blocks into placeholders
       const finalContentWithCodeBlocks = finalContent.replace(/<!--CODEBLOCK_(\d+)-->/g, (_, index) => codeBlocks[index]);
 
+      /* 🆕 [ADDED HERE] Add language parameter to URLs before writing the file */
+      const finalContentWithLangUrls = addLangParamToUrls(finalContentWithCodeBlocks, targetLanguage);
+      /* 🆕 [END OF ADDITION] */
+
       // Combine YAML front matter with the translated content
-      const finalContentWithYaml = yamlFrontMatter + '\n' + finalContentWithCodeBlocks;
+      const finalContentWithYaml = yamlFrontMatter + '\n' + finalContentWithLangUrls;
 
       // Write to the output file
       writeFileSync(outputFile, finalContentWithYaml, 'utf8');
