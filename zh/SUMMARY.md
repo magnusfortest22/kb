@@ -21,9 +21,9 @@
 
 ## Custom
 
-* [我的测试页面](custom/my-test-page/README.md)
+* [我的测试]页面](custom/my-test-page/README.md)
   * [测试代码块](custom/my-test-page/test-code-block.md)
-  * [Codeblock 测试新](custom/my-test-page/codeblock-test-new.md)
+  * [代码块测试新内容](custom/my-test-page/codeblock-test-new.md)
   * [CG 2](custom/my-test-page/cg-2.md)
 
 ## CG2
@@ -31,3 +31,4 @@
 * [Custom2](cg2/custom2/README.md)
   * [深入探索](cg2/custom2/dive-deep/README.md)
     * [页面 1](cg2/custom2/dive-deep/page-1.md)
+* [创意测试页面](cg2/test-page-for-creatives.md)
