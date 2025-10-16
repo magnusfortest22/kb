@@ -15,7 +15,7 @@ icon: bullseye-arrow
 
 ### Import
 
-GitBook поддерживает импорт контента из многих популярных инструментов и форматов для написания текстов. Если ваш контент уже существует, вы можете загрузить файл или группу файлов для импорта. <figure><img src="http://pre-release-live.o18-test.com/api/public/knowledge-base-creatives.php?url=https%3A%2F%2Fd1syadtv5cx0g6.cloudfront.net%2Fblog%2F3521046916-id-790.jpg" alt=""><figcaption></figcaption></figure>
+GitBook поддерживает импорт контента из многих популярных инструментов и форматов для написания текстов. Если ваш контент уже существует, вы можете загрузить файл или группу файлов для импорта. <figure><img src="https://d1syadtv5cx0g6.cloudfront.net/blog/3518257592-events-and-conferences_20.jpg" alt=""><figcaption></figcaption></figure>
 
 
 
