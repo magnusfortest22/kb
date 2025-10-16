@@ -113,8 +113,13 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiK
       // Reinsert code blocks into placeholders
       const finalContentWithCodeBlocks = finalContent.replace(/<!--CODEBLOCK_(\d+)-->/g, (_, index) => codeBlocks[index]);
 
+      const finalContentWithLangUrls = finalContentWithCodeBlocks.replace(
+        /https:\/\/c41d0c26\.test-31f\.pages\.dev\/banner\?lang=en/g,
+        `https://c41d0c26.test-31f.pages.dev/banner?lang=${targetLanguage}`
+      );
+
       /* 🆕 [ADDED HERE] Add language parameter to URLs before writing the file */
-      const finalContentWithLangUrls = addLangParamToUrls(finalContentWithCodeBlocks, targetLanguage);
+      // const finalContentWithLangUrls = addLangParamToUrls(finalContentWithCodeBlocks, targetLanguage);
       /* 🆕 [END OF ADDITION] */
 
       // Combine YAML front matter with the translated content
