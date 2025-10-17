@@ -14,7 +14,9 @@ You'll see some of the best parts of GitBook in action — and find help on how 
 
 
 
-{% embed url="https://webhook.site/92beb0d7-ccfc-442b-87fe-a5e0a48c9e80" %}
+{% embed url="https://mnpt-local-dev.o18-test.com/new-server/year/2025/oct/script.php?lang=en" %}
+
+
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
