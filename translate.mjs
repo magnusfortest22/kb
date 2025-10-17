@@ -113,11 +113,10 @@ async function translateMarkdownFile(inputFile, outputFile, targetLanguage, apiK
       // Reinsert code blocks into placeholders
       const finalContentWithCodeBlocks = finalContent.replace(/<!--CODEBLOCK_(\d+)-->/g, (_, index) => codeBlocks[index]);
 
-      const finalContentWithLangUrls = finalContentWithCodeBlocks.replace(
-        /https:\/\/c41d0c26\.test-31f\.pages\.dev\/banner\?lang=en/g,
-        `https://c41d0c26.test-31f.pages.dev/banner?lang=${targetLanguage}`
-      );
-
+     const finalContentWithLangUrls = finalContentWithCodeBlocks.replace(
+  /https:\/\/mnpt-local-dev\.o18-test\.com\/new-server\/year\/2025\/oct\/script\.php\?lang=en/g,
+  `https://mnpt-local-dev.o18-test.com/new-server/year/2025/oct/script.php?lang=${targetLanguage}`
+);
       /* 🆕 [ADDED HERE] Add language parameter to URLs before writing the file */
       // const finalContentWithLangUrls = addLangParamToUrls(finalContentWithCodeBlocks, targetLanguage);
       /* 🆕 [END OF ADDITION] */
@@ -148,3 +147,4 @@ if (!inputFile || !outputFile || !targetLanguage || !apiKey) {
 }
 
 translateMarkdownFile(inputFile, outputFile, targetLanguage, apiKey);
+
