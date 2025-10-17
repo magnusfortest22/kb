@@ -18,9 +18,3 @@ coverY: 0
 
 
 
-
-
-
-
-<figure><img src="https://mnpt-local-dev.o18-test.com/new-server/year/2025/oct/script.php?lang=en" alt=""><figcaption></figcaption></figure>
-
